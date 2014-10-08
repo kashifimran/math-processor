@@ -21,10 +21,10 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName=Math Processor
-LicenseFile=D:\MP\math-processor\LICENSE
-OutputDir=D:\MP\math-processor\dist
-OutputBaseFilename=math-processor-setup
-SetupIconFile=D:\MP\math-processor\visual-studio\MathProcessor\app_icon.ico
+LicenseFile=LICENSE
+OutputDir=dist
+OutputBaseFilename=math-processor-{#MyAppVersion}-setup
+SetupIconFile=visual-studio\MathProcessor\app_icon.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -35,22 +35,22 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\bin\Release\MathProcessor.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\bin\Release\ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\bin\Release\MathProcessorLib.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\bin\Release\MathProcessor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\bin\Release\README.html"; DestDir: "{app}"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\bin\Release\MathProcessor.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\bin\Release\ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\bin\Release\MathProcessorLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\bin\Release\MathProcessor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\bin\Release\README.html"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\dancing_curves.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\ExportTruthTable.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\fibonacci.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\plot.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\prime_test.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\StandarDeviation.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\tables.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\table_test.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\truthExample.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "D:\MP\math-processor\visual-studio\MathProcessor\Examples\user_table.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\dancing_curves.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\ExportTruthTable.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\fibonacci.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\plot.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\prime_test.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\StandarDeviation.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\tables.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\table_test.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\truthExample.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\user_table.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
