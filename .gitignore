@@ -177,3 +177,4 @@ FakesAssemblies/
 website/Content
 website/Scripts/*
 !_references.js
+/dist

@@ -155,6 +155,45 @@ namespace MathProcessor
             }
             Dirty = false;
         }
+
+        private void OpenFile(string fileName)
+        {
+            try
+            {
+                using (Stream stream = File.OpenRead(fileName))
+                {
+                    LoadFile(stream);
+                }
+                currentFile = fileName;
+            }
+            catch
+            {
+                currentFile = "";
+                System.Windows.MessageBox.Show("File could not be opened. It is either corrupt or permission was denied.", "Error");
+            }
+            SetTitle();
+            commandControl.Focus();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var strings = Environment.GetCommandLineArgs();
+                if (strings.Length > 1)
+                {
+                    OpenFile(strings[1]);
+                }
+            }
+            catch { }
+
+            if (ConfigManager.ShowAd)
+            {
+                GamentryAd adForm = new GamentryAd();
+                adForm.Owner = this;
+                adForm.ShowDialog();
+            }
+        }
         
         private void OpenCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
@@ -164,22 +203,8 @@ namespace MathProcessor
             bool? result = ofd.ShowDialog();
             if (result == true)
             {
-                try
-                {
-                    using (Stream stream = File.OpenRead(ofd.FileName))
-                    {
-                        LoadFile(stream);
-                    }
-                    currentFile = ofd.FileName;
-                }
-                catch
-                {
-                    currentFile = "";
-                    System.Windows.MessageBox.Show("File could not be opened. It is either corrupt or permission was denied.", "Error");
-                }
+                OpenFile(ofd.FileName);
             }
-            SetTitle();
-            commandControl.Focus();
         }
 
         private void SaveCommandHandler(object sender, ExecutedRoutedEventArgs e)
@@ -417,17 +442,7 @@ namespace MathProcessor
         {
             Process.Start("http://www.facebook.com/mathiversity");
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (ConfigManager.ShowAd)
-            {
-                GamentryAd adForm = new GamentryAd();
-                adForm.Owner = this;
-                adForm.ShowDialog();
-            }
-        }
-
+        
         private void SolveNow_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("http://www.Gamentry.com");
