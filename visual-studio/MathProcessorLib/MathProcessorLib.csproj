@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{88CFF809-8853-436F-8BA7-B76464743A34}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MathProcessorLib</RootNamespace>
+    <AssemblyName>MathProcessorLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MPLibSign.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\BlockCommands.cs" />
+    <Compile Include="Core\Calculator.cs" />
+    <Compile Include="Core\Function.cs" />
+    <Compile Include="Core\FunctionDefiner.cs" />
+    <Compile Include="Core\FunctionCreator.cs" />
+    <Compile Include="Functions\ArrayManipulator.cs" />
+    <Compile Include="Functions\BasicCalculations.cs" />
+    <Compile Include="Functions\Booleans.cs" />
+    <Compile Include="Functions\Text.cs" />
+    <Compile Include="Functions\Plot.cs" />
+    <Compile Include="Functions\Directives.cs" />
+    <Compile Include="Functions\LogsAndPowers.cs" />
+    <Compile Include="Functions\Matrix.cs" />
+    <Compile Include="Functions\Miscellaneous.cs" />
+    <Compile Include="Functions\Numerical.cs" />
+    <Compile Include="Functions\Statistics.cs" />
+    <Compile Include="Functions\Testbed.cs" />
+    <Compile Include="Functions\Trigonometry.cs" />
+    <Compile Include="Graphing\GraphForm_New.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphing\GraphForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphing\PlotInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Token.cs" />
+    <Compile Include="Core\Tokenizer.cs" />
+    <Compile Include="Core\Variables.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphing\GraphForm_New.resx">
+      <DependentUpon>GraphForm_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphing\GraphForm.resx">
+      <DependentUpon>GraphForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MPLibSign.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

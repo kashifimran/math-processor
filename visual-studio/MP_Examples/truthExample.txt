@@ -1,0 +1,19 @@
+{
+	echo("We will try to use the extension function exportTable"):
+	"This example requires that you have loaded the file ExportTruthTable.txt":
+	fillbool (a,b,c):
+	"Function fillbool has created an appropriate truth table with columns a, b and c":
+	"Lets check what they contain":
+	a:
+	b:
+	c:
+	"These will be used for premises. Let's now calculate the conclusion":
+	"We can perform any required Boolean operation for the conlusion":
+	"We will call our conclusion 'r'. It uses the operation: r = (a + (b ^ c)) * a:":
+	r = (a + (b ^ c)) * a:
+	"Now we try to export our data to .html file":
+	"Remember you have to provide the name of the .html file for this operation":	
+	t = concat(a,b,c,r):
+	echo ("If you did not load the 'ExportTruthTable.txt' prior to loading this example, you will see an error"):
+	exportTable(4, t):		
+}

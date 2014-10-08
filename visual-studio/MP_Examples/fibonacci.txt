@@ -1,0 +1,23 @@
+{
+fib = function (return, v_times, v_twoNumbersBack, v_oneNumberBack) 
+{     
+  if (v_times == 1) { return = v_twoNumbersBack;:} 
+  else 
+  {
+    if (v_times == 2) { return = v_oneNumberBack;:} 
+    else 
+    {
+      if (v_times == 3) { return = v_oneNumberBack + v_twoNumbersBack;: }
+      else 
+      {
+        return = fib(v_times - 1, v_oneNumberBack, v_oneNumberBack + v_twoNumbersBack);:
+      }
+    } 
+  }
+}
+
+"Usage:" :
+"Type: fib ( 10, 0, 1) to get the 10th Fibonacci number" :
+"Type: fib ( 50, 0, 1) to get the 50th Fibonacci number" :
+
+}

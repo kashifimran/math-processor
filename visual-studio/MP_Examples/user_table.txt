@@ -1,0 +1,25 @@
+{
+	remove table;:
+	table = function ()
+	{
+		tmp_00_$ = format (G);:		
+		num = getusernum("Please provide a number");:
+		if (num > 0)
+		{
+			a = 1;: 
+			repeat (10) 
+			{ 
+				echo (num , "x ",  a ,  "= ", a * num): 
+				a = a+1 ;:
+			}
+		}
+		else 
+		{
+			echo ("Error. You did not provide a positive integer."): 
+		}
+		format(tmp_00_$);:
+		remove tmp_00_$;:			
+	}
+	echo ("Going to call the newly created user function table()"):
+	table():
+}

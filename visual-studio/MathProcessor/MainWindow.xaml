@@ -1,0 +1,76 @@
+﻿<Window x:Class="MathProcessor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MathProcessor"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Title="Math Processor" 
+        WindowState="Maximized"
+        >
+    <Window.Resources>
+       
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close"	        Executed="CloseCommandHandler"/>
+        <CommandBinding Command="Open"          Executed="OpenCommandHandler"/>
+        <CommandBinding Command="Save"          Executed="SaveCommandHandler"/>
+        <CommandBinding Command="SaveAs"        Executed="SaveAsCommandHandler"/>
+        <CommandBinding Command="Cut"           Executed="CutCommandHandler"/>
+        <CommandBinding Command="Copy"          Executed="CopyCommandHandler"/>
+        <CommandBinding Command="Paste"         Executed="PasteCommandHandler"/>
+        <CommandBinding Command="Delete"        Executed="DeleteCommandHandler"/>
+        <CommandBinding Command="SelectAll"     Executed="SelectAllCommandHandler"/>
+        <CommandBinding Command="Print"         Executed="PrintCommandHandler"/>
+        <CommandBinding Command="Undo"          Executed="UndoCommandHandler"/>
+        <CommandBinding Command="Redo"          Executed="RedoCommandHandler"/>
+        <CommandBinding Command="DecreaseZoom"  Executed="DecreaseZoomCommandHandler"/>
+        <CommandBinding Command="IncreaseZoom"  Executed="IncreaseZoomCommandHandler"/>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <MouseBinding Gesture="{x:Static local:MouseWheelGesture.CtrlUp}"  Command="IncreaseZoom"/>
+        <MouseBinding Gesture="{x:Static local:MouseWheelGesture.CtrlDown}"  Command="DecreaseZoom"/>
+    </Window.InputBindings>
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem x:Name="fileMenuItem" Header="_File">
+                <MenuItem x:Name="openMenuItem" Header="_Open" Command="Open" />
+                <MenuItem x:Name="saveMenuItem" Header="_Save" Command="Save" />
+                <MenuItem x:Name="saveAsMenuItem" Header="Save _As" Command="SaveAs"/>
+                <!--<MenuItem x:Name="exitMenuItem" Header="E_xit" Command="Close"/>-->
+            </MenuItem>
+            <MenuItem x:Name="editMenuItem" Header="_Edit">
+                <MenuItem x:Name="cutMenuItem" Header="C_ut" Command="Cut" />
+                <MenuItem x:Name="copyMenuItem" Header="_Copy" Command="Copy" />
+                <MenuItem x:Name="pasteMenuItem" Header="_Paste" Command="Paste"/>
+                <MenuItem x:Name="deleteMenuItem" Header="_Delete" Command="Delete"/>
+                <Separator />
+                <MenuItem x:Name="selectAllMenuItem" Header="Select _All" Command="SelectAll"/>
+                <MenuItem x:Name="clearAllMenuItem" Header="Clea_r All" Click="clearAllMenuItem_Click"/>                
+            </MenuItem>
+            <MenuItem Header="_Run">
+                <MenuItem Header="_Load Command File" Click="RunFile_Click"></MenuItem>
+                <!--<MenuItem Header="_Load Add-On"></MenuItem>-->
+            </MenuItem>
+            <MenuItem Header="_GUI Kits">
+                <MenuItem Name="basicKitMenu" Header="_Basic Math" Click="KitMenuItem_Click"></MenuItem>
+                <MenuItem Name="matrixKitMenu" Header="_Matrices" Click="KitMenuItem_Click"></MenuItem>
+                <MenuItem Name="truthKitMenu" Header="_Truth Tables" Click="KitMenuItem_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="examplesMenuItem" Header="E_xamples"></MenuItem>
+            <MenuItem Header="Free Online _Puzzles">
+                <MenuItem Header="_Solve Now" Click="SolveNow_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Tutorials" Click="TutorialsMenu_Click"></MenuItem>
+                <MenuItem Header="_Documentation" Click="DocumentationMenu_Click"></MenuItem>
+                <MenuItem Header="_Facebook Page" Click="fbMenu_Click"></MenuItem>
+                <Separator />
+                <MenuItem Header="_About" Click="aboutMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <ScrollViewer Name="mainScrollViewer" HorizontalScrollBarVisibility="Auto" ScrollChanged="mainScrollViewer_ScrollChanged" >
+            <local:CommandControl Background="Transparent" x:Name="commandControl" Focusable="True" FocusVisualStyle="{x:Null}"></local:CommandControl>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

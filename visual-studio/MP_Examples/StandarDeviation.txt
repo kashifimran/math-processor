@@ -1,0 +1,13 @@
+{
+	echo("Standard Deviation Using mean") :	
+	echo("Changing number format") :
+	temp_00x_ = format (G):	
+	echo("Array created as under") :
+	__x0 = array (29, 34, 20, 48, 98, 12, 43, 54, 98, 23, 43, 23, 89, 43) :	
+	echo("Changing number format again") :
+	format(F04):
+	__SD = sqrt(sum((__x0-avg(__x0))^2)/count(__x0));:
+	echo("Standard Deviation: ", __SD):
+	remove __SD __x0;:		
+	format(temp_00x_);
+}
