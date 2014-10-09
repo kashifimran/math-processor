@@ -1,0 +1,36 @@
+{
+	/*
+	An example to show full syntax of the addplot() function
+    The first three parameters are required, while the remaining 6 are optional.
+	When you include one optional parameter, you must proivde all preceding optional 
+	Parameters as well. The remaining optional parameters, however, can be omitted. 
+	Parameters to the addplot() function and their meaning:
+	  
+		1: The plot object, created using createplot() function
+		2 & 3: x and y values respectively.
+		4: Rotation of the current plot data (showplot() also supports rotation for the whole plot)
+		5: Thickness of the Pen to draw the current plot (only used when color is other than 'transparent'
+		6: Color of the line. Can be:
+			- a color value like 'red' 
+			-(A)RGB value passed as a comma delimited string like "100,210,100" (RGB) or "100,200,122,100" (ARGB)
+			- An empty string to use a color provided by MP
+		7: Translation of the geometry along x-axis
+		8: Translation of the geometry along y-axis
+		9: The fill color. Just like the line-color, this can be a color name or an (A)RGB value. 
+		
+	Example follows:
+	*/
+	removeall():
+	p = createplot();:
+	a = vectorin(-2*pi, 0.05, 2*pi);:
+	addplot(p, a, sin(a));:
+	addplot(p, a, sin(a), 45, 2, "green");:
+	addplot(p, a, sin(a), 45, 2, "230,100,200", -50, 0, "blue");:
+	addplot(p, 2*a, 2*sin(a), 20, 5, "100,230,100,200", -20, 20, "100,130,160,240");:
+	
+	"Let's create a triangle";:	
+	a = array(-2.5, 0, 2.5, -2.5, 0);:
+	b = array(2.5, -2.5, 2.5, 2.5, -2.5);:	
+	addplot(p, a, b, 0, 5, "180,100,50,250", 0, 0, "150, 200, 50, 200");:
+	showplot(p, 40, 40);:
+}

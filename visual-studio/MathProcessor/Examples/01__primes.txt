@@ -1,0 +1,7 @@
+{
+    push(format(G));:
+    primes(100000):
+    "":
+    "These were the first '100 thousand' prime numbers!":
+    format(pop());:
+}

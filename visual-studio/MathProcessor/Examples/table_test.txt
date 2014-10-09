@@ -1,6 +1,0 @@
-{
-	"If you did not load the file tables.txt prior to this file, you will see errors.":
-	"Try loading that file first in that case":
-	format g:
-	table (12, 10):	
-}

@@ -1,4 +1,5 @@
 {
+removeall:
 a = vector( 0, 0.05, 2*pi);:
 b =sin(a);:
 plot ( a, b , red, b, a, green, -a, b, red, b, -a, green, cos(a) *5, cos(b)*5, brown, -cos(a)*5, -cos(b)*5, darkgreen, -cos(a), -sin(b), red);:

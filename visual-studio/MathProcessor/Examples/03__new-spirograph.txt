@@ -1,0 +1,58 @@
+{ 
+	"The original routines were written by one of our users for the old plot function.";:
+	"We modified the original version to take advantage of the new functions";:
+	"The number of lines reduced by more than 50%";:
+	removeall():	
+	spirograph = function (v_R, v_r, v_p, v_nRotations, o_plot, s_color)
+	{
+		t = vectorin(0, 0.05, 2 * pi * v_nRotations);:
+		x = (v_R + v_r) * cos(t) + v_p * cos((v_R + v_r) * t / v_r);:
+		y = (v_R + v_r) * sin(t) + v_p * sin((v_R + v_r) * t / v_r);:
+		addplot(o_plot, x, y, 0, 1, s_color);:
+	}
+	p = createplot();:
+	spirograph(60*1, -15*1, 15*1, 10, p, red);:
+	spirograph(60*1.5, -15*1.5, 15*1.5, 10, p, green):
+	spirograph(60*2, -15*2, 15*2, 10, p, blue):
+	spirograph(60*2.5, -15*2.5, 15*2.5, 10, p, violet):
+	spirograph(60*3, -15*3, 15*3, 10, p, purple):
+	spirograph(60*3.5, -15*3.5, 15*3.5, 10, p, yellow);:
+	spirograph(60*4, -15*4, 15*4, 10, p, orange):
+	spirograph(60*4.5, -15*4.5, 15*4.5, 10, p, brown):
+	spirograph(60*5, -15*5, 15*5, 10, p, green):
+	spirograph(60*5.5, -15*5.5, 15*5.5, 10, p, magenta):
+	showplot(p);:
+	
+	/*Another example added for v.1.0.1.8*/
+	removeall():   
+	spirograph = function (v_R, v_r, v_p, v_start, v_step, v_stop, o_plot, v_lineSize, s_color, v_scale, v_n)
+
+	{
+		t = vectorin(v_start, v_step, v_stop);:
+		x = (v_R + v_r) * cos(t) + v_p * cos((v_R + v_r) * t / v_r);:
+		y = (v_R + v_r) * sin(t) + v_p * sin((v_R + v_r) * t / v_r);:
+		addplot(o_plot, x * v_scale, y * v_scale, v_n, v_lineSize, s_color, 0, 0);:
+	}
+
+	colors = strings(Green, Blue, DarkOrchid, Red, Chocolate, DarkSalmon, Goldenrod, Gold);:
+	f = array(1.5, 1.25, 1.04, 0.86, 0.71, 0.58, 0.46, 0.37);:
+	p = createplot();:
+	ring = 0;:
+	repeat (8)
+	{
+		i = 0;:
+		repeat(4)
+		{
+			j = 0;:
+			repeat(8)
+			{       
+				spirograph(60*itemat(f, ring), -15*itemat(f, ring) , 12*itemat(f, ring) , 2*pi*(i*0.250-.055) , 0.005, 
+						   2*pi*(i*0.250+.055), p, 2, stringat(colors, j),   3.0, j*(11.25)+0);:
+				j = j + 1;:
+			}
+			i = i + 1;:   
+		}
+		ring = ring + 1;:
+	}
+	showplot(p);:
+}

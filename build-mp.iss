@@ -41,16 +41,17 @@ Source: "visual-studio\MathProcessor\bin\Release\MathProcessorLib.dll"; DestDir:
 Source: "visual-studio\MathProcessor\bin\Release\MathProcessor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "visual-studio\MathProcessor\bin\Release\README.html"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "visual-studio\MathProcessor\Examples\dancing_curves.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\ExportTruthTable.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\fibonacci.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\plot.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\prime_test.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\StandarDeviation.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\tables.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\table_test.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\truthExample.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\user_table.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\00__filled-spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\01__primes.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\02__new-plots.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\03__new-spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\04__gradient-Brushes.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\05__fibonacci.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\06__old-plots.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\07__old-spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\08__addplot-example.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\09__user-table.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\10__dancing-curves.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

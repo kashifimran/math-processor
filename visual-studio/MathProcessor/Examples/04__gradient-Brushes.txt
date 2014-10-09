@@ -1,0 +1,30 @@
+{	
+	/* Example to show the use of Linear gradients for filling shapes */
+	
+	removeall;:
+	/*This is my favorite thing!*/
+	spirograph = function (o_plot, v_R, v_r, v_p, v_nRotations, v_thickness, s_color, o_fill)
+	{
+		t = vectorin(0, 0.05, 2 * pi * v_nRotations);:
+		x = (v_R + v_r) * cos(t) + v_p * cos((v_R + v_r) * t / v_r);:
+		y = (v_R + v_r)* sin(t) + v_p * sin((v_R + v_r) * t / v_r);:
+		addplot(o_plot, x, y, 0, v_thickness, s_color, 0, 0, o_fill):
+	}
+	
+	b1 = lgbrush(array(0, 0, 400, 400), true, 0, strings(red, green));:
+	b2 = lgbrush(array(0, 0, 400, 200), true, 0, strings(red, green));:
+	b3 = lgbrush(array(0, 0, 180, 180), false, 90, strings(red, green));:
+	b4 = lgbrush(array(0, 0, 400, 400), true, 0, strings(red, green, blue), array(0, 0.5, 1));:
+	p = createplot();:
+	a = vectorin(-2*pi, 0.05, 2*pi);:
+	addplot(p, a, sin(a), 0, 0, Transparent, 0, -pi*45, b1);:
+	addplot(p, a, cos(a), 0, 0, Transparent, 0, 0, b2);:	
+	addplot(p, a, sin(a), 0, 0, Transparent, 0, -pi*70, b3);:
+	addplot(p, a, cos(a), 0, 0, Transparent, 0, 45*pi, b4);:
+	showplot(p, 63, 63);:	
+	
+	p=createplot();:
+	b5 = lgbrush(array(0, 0, 200, 200), true, 0, strings(red, green, blue, violet), array(0, 0.3, 0.7, 1));:
+	spirograph(p, 52, -25, 36, 25, 0, Transparent, b5);:
+	showplot(p, 4, 4);:	
+}

@@ -1,0 +1,42 @@
+{
+    removeall:
+	/*
+		This example demonstrates the use of new plotting routines
+		Created by K.I. (kashif@mathiversity.com)
+	*/
+	t = vectorin(-16, 0.005, 16);:	
+	a = sin(8*t/5) * cos(t);:
+	b = sin(8*t/5) * sin(t);:
+	
+	theta= vectorin(0, 0.005, 2*pi);:
+	c = 4 * cos(theta) ^ 3;:
+	d = 4 * sin(theta) ^ 3;:
+	
+	x= vectorin(-2*pi, 0.005, 2*pi);:
+	y= sin(x);:
+	
+	p = createplot();:	
+	
+	addplot(p, a, b, 0, 1, red);:
+	addplot(p, c, d, 0, 1, green);:
+	addplot(p, x, y, 0, 1, orange);:
+	
+	"Let's show the plot by scaling 30 times";:
+	showplot(p, 30, 30);:
+	
+	"Now further zoom in";:
+	showplot(p, 100, 100);:	
+	
+	"Copy plot for changes.";:
+	p2 = copyplot(p);:
+	"Add a rotated version of second plot and draw it thick";:
+	addplot(p2, c, d, 45, 2, red);:		
+	"Draw new plot at 60 times original size";:
+	showplot(p2, 60, 60);:
+	
+	"Remove the red curve";:
+	removeplot(p2, 0);:	
+	"Now add a 45 degrees rotated version of the removed curve to second plot and show it thick with a violet pen.";:
+	addplot(p2, a*4, b*4, 45, 2, violet);:
+	showplot(p2, 40, 40);:
+}

@@ -1,0 +1,13 @@
+{
+   removeall;:
+   spirograph = function (v_R, v_r, v_p, v_nRotations, s_color)
+   {
+      t = vectorin(0, 0.05, 2 * pi * v_nRotations);:
+      x = (v_R + v_r) * cos(t) + v_p * cos((v_R + v_r) * t / v_r);:
+      y = (v_R + v_r)* sin(t) + v_p * sin((v_R + v_r) * t / v_r);:
+      plot(x, y, s_color):
+   }
+   spirograph(53, -29, 40, 30, gray):
+   spirograph(-53, 29, 25, 30, blue):
+   spirograph(-30, 19, 17, 32, darkgreen):
+}

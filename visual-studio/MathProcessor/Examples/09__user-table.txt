@@ -1,8 +1,8 @@
 {
-	remove table;:
+	removeall;:
 	table = function ()
 	{
-		tmp_00_$ = format (G);:		
+		push(format (G));:		
 		num = getusernum("Please provide a number");:
 		if (num > 0)
 		{
@@ -17,9 +17,8 @@
 		{
 			echo ("Error. You did not provide a positive integer."): 
 		}
-		format(tmp_00_$);:
-		remove tmp_00_$;:			
+		format(pop());:
 	}
-	echo ("Going to call the newly created user function table()"):
+	"Call new function to see it in action";:
 	table():
 }

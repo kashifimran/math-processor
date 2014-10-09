@@ -1,0 +1,30 @@
+{
+remove(fibonacci):
+fibonacci = function (return, v_times, v_twoNumbersBack, v_oneNumberBack) 
+{     
+  if (v_times == 1) { return = v_twoNumbersBack;:} 
+  else 
+  {
+    if (v_times == 2) { return = v_oneNumberBack;:} 
+    else 
+    {
+      if (v_times == 3) { return = v_oneNumberBack + v_twoNumbersBack;: }
+      else 
+      {
+        if (v_times >= 0)
+        {
+            return = fibonacci(v_times - 1, v_oneNumberBack, v_oneNumberBack + v_twoNumbersBack);:
+        }
+        else 
+        {
+            echo("Error: Bad input."):
+            return = -1;:
+        }	
+      }
+    } 
+  }
+}
+"Usage:" :
+"Type: fibonacci ( 10, 0, 1) to get the 10th Fibonacci number" :
+"Type: fibonacci ( 50, 0, 1) to get the 50th Fibonacci number" :
+}

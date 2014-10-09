@@ -1,7 +1,0 @@
-{
-	__a = vectorin(-2, 0.005, 2);:
-	__b = sqrt(4- __a^2);:
-	__c = -sqrt(4- __a^2);:
-	plot(__a,__b,red,__a,__c,red):
-	remove __a __b __c:	
-}

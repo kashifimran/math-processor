@@ -1,0 +1,19 @@
+{
+    removeall:
+	"First plot";:
+	t = vectorin(-16, 0.05, 16);:
+	x = sin(8*t/5) * cos(t);:
+	y = sin(8*t/5) * sin(t);:
+	plot(x, y);:	
+	
+	"Second plot";:
+	theta= vectorin(0, 0.05, 2*pi);:
+	x= 4 * cos(theta) ^ 3;:
+	y= 4 * sin(theta) ^ 3;:
+	plot(x, y, green);:	
+	
+	"Third plot";:
+	x= vectorin(0, 0.05, 2*pi);:
+	y= sin(x);:
+	plot(x, y, x, y*1.5, x, y*2, x, y*2.5);:
+}
