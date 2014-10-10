@@ -193,9 +193,9 @@ namespace MathProcessor
 
             if (ConfigManager.ShowAd)
             {
-                GamentryAd adForm = new GamentryAd();
+                /*GamentryAd adForm = new GamentryAd();
                 adForm.Owner = this;
-                adForm.ShowDialog();
+                adForm.ShowDialog();*/
             }
         }
 
