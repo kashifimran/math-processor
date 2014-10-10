@@ -108,6 +108,14 @@ namespace MathProcessor
             }
         }
 
+        public static string ExampleFolderPath
+        {
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(exePath), "Examples");
+            }
+        }
+
         private static void CopyConfigFile()
         {
             try

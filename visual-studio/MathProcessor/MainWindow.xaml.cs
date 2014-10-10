@@ -89,7 +89,7 @@ namespace MathProcessor
         {
             try
             {
-                string[] sampleFiles = Directory.GetFiles("Examples");
+                string[] sampleFiles = Directory.GetFiles(ConfigManager.ExampleFolderPath);
                 foreach (string s in sampleFiles)
                 {
                     System.Windows.Controls.MenuItem item = new System.Windows.Controls.MenuItem();
@@ -100,6 +100,10 @@ namespace MathProcessor
             }
             catch
             {
+                examplesMenuItem.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e)
+                {
+                    System.Windows.Forms.MessageBox.Show("Math Processor could not find a valid Examples folder in the application root.\r\nPlease try to reinstall Math Processor.", "Examples Folder Missing", MessageBoxButtons.OK);
+                });
             }
         }
 
@@ -194,7 +198,7 @@ namespace MathProcessor
                 adForm.ShowDialog();
             }
         }
-        
+
         private void OpenCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
@@ -442,7 +446,7 @@ namespace MathProcessor
         {
             Process.Start("http://www.facebook.com/mathiversity");
         }
-        
+
         private void SolveNow_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("http://www.Gamentry.com");
