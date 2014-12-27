@@ -1,5 +1,5 @@
 {
-	removeall;:
+	remove table;:
 	table = function ()
 	{
 		push(format (G));:		

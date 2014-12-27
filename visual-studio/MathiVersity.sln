@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathProcessorLib", "MathProcessorLib\MathProcessorLib.csproj", "{88CFF809-8853-436F-8BA7-B76464743A34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathProcessor", "MathProcessor\MathProcessor.csproj", "{808FB9F3-7AA0-4043-A000-9A89CF9577E4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathProcessorDemo", "MathProcessorDemo\MathProcessorDemo.csproj", "{AB327533-7789-48E0-A72C-2BBDE8A53104}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathProcessor_Demo_Console", "MathProcessor_Demo_Console\MathProcessor_Demo_Console.csproj", "{40E17886-A415-4F50-93BA-E9C80FAC5D93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,26 +37,6 @@ Global
 		{808FB9F3-7AA0-4043-A000-9A89CF9577E4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{808FB9F3-7AA0-4043-A000-9A89CF9577E4}.Release|x86.ActiveCfg = Release|x86
 		{808FB9F3-7AA0-4043-A000-9A89CF9577E4}.Release|x86.Build.0 = Release|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Debug|x86.ActiveCfg = Debug|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Debug|x86.Build.0 = Debug|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Release|Any CPU.ActiveCfg = Release|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Release|Mixed Platforms.Build.0 = Release|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Release|x86.ActiveCfg = Release|x86
-		{AB327533-7789-48E0-A72C-2BBDE8A53104}.Release|x86.Build.0 = Release|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Debug|x86.ActiveCfg = Debug|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Debug|x86.Build.0 = Debug|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Release|Any CPU.ActiveCfg = Release|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Release|Mixed Platforms.Build.0 = Release|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Release|x86.ActiveCfg = Release|x86
-		{40E17886-A415-4F50-93BA-E9C80FAC5D93}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

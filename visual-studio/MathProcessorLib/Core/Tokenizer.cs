@@ -108,7 +108,7 @@ namespace MathProcessorLib
                     tokens.Add(new Token(TokenType.Block, "", nextTokenStr.Substring(1, nextTokenStr.Length - 2)));
                     continue;
                 }
-                while (i < expression.Length && !Char.IsWhiteSpace(expression[i]) && (IsOperator(expression[i].ToString()) == OpEnum.No) && expression[i] != '"')
+                while (i < expression.Length && !Char.IsWhiteSpace(expression[i]) && (IsOperator(expression[i].ToString()) == OpEnum.No) && expression[i] != '"' && expression[i] != '{')
                 {
                     nextTokenStr += expression[i++].ToString();
                 }

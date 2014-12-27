@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MathProcessor"
-#define MyAppVersion "1.0.2.3"
+#define MyAppVersion "1.0.2.4"
 #define MyAppPublisher "Kashif Imran"
 #define MyAppURL "http://www.mathiversity.com/"
 #define MyAppExeName "MathProcessor.exe"
