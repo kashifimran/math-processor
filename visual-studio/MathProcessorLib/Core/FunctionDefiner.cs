@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace MathProcessorLib
 {
     static class FunctionDefiner
-    {   
+    {
         static Variables variables = Variables.GetVariables();
         static Dictionary<string, UserFunction> userFunctions = new Dictionary<string, UserFunction>();
         static int nextIdentifier = 0;
@@ -26,7 +26,7 @@ namespace MathProcessorLib
         }
 
         public static void LoadXML(XElement xe)
-        {            
+        {
             userFunctions.Clear();
             nextIdentifier = 0;
             XElement element = xe.Element("functions");
@@ -37,17 +37,17 @@ namespace MathProcessorLib
                 userFunctions.Add(nextIdentifier.ToString(), uf);
                 nextIdentifier++;
             }
-        }   
+        }
 
-    
+
         public static void RemoveFromList(string uFuncName)
         {
             if (userFunctions.ContainsKey(variables.GetStringData(uFuncName)))
                 userFunctions.Remove(variables.GetStringData(uFuncName));
-       }    
-      
+        }
+
         public static Token CreateUserFunction(List<Token> arguments)
-        {            
+        {
             if (arguments.Count < 1)
                 return Token.Error("Arguments not valid");
             if (arguments.Last().TokenType != TokenType.Block)
@@ -57,27 +57,12 @@ namespace MathProcessorLib
             int i = 0;
             bool returns = false;
             if (arguments.Count > 1 && arguments[0].TokenName == "return")
-            {                
+            {
                 i = 1;
                 returns = true;
             }
             for (; i < arguments.Count - 1; i++)
             {
-                if (arguments[i].TokenName.Length < 3 ||
-                    (!arguments[i].TokenName.StartsWith("v_") && !arguments[i].TokenName.StartsWith("b_") &&
-                     !arguments[i].TokenName.StartsWith("s_") && !arguments[i].TokenName.StartsWith("m_")) &&
-                     !arguments[i].TokenName.StartsWith("o_")
-                   )
-                {
-                    return Token.Error("Invalid parameter name. Param No. " + (i + 1) + ": " + arguments[i].TokenName);
-                }
-                foreach (string s in signatureStrings)
-                {
-                    if (arguments[i].TokenName.StartsWith(s))
-                    {
-                        return Token.Error(arguments[i].TokenName + " starts with " + s + ", which is the FULL name of another parameter. This is not allowed.");
-                    }
-                }
                 signatureStrings.Add(arguments[i].TokenName);
             }
             userFunctions.Add(nextIdentifier.ToString(), new UserFunction(signatureStrings, arguments.Last().StrData, returns));
@@ -86,31 +71,33 @@ namespace MathProcessorLib
             return temp;
         }
 
-        public static Token ExecuteUserFunction (string funcName, List<Token> arguments)
+        public static Token ExecuteUserFunction(string funcName, List<Token> arguments)
         {
-            functionCallNumber++;            
-            List<string> namelessParams = new List<string>();
+            functionCallNumber++;
             Token result = Token.Error("Invalid call to user function");
             if (!userFunctions.ContainsKey(variables.GetStringData(funcName)))
                 return result;
             UserFunction userFunc = userFunctions[variables.GetStringData(funcName)];
-            if ((result = VerifySignature(userFunc, arguments)).TokenType == TokenType.Error)
+            Dictionary<string, string> names = new Dictionary<string, string>();
+            for (int i = 0; i < arguments.Count; i++)
             {
-                return result;
+                var tempName = "_" + Guid.NewGuid().ToString("N");
+                names.Add(tempName, arguments[i].TokenName);
+                arguments[i].TokenName = tempName;
+                variables.AddToken(arguments[i]);
             }
-
-            string executbleCode = ReplaceNames(arguments, namelessParams, userFunc);           
+            string executbleCode = ReplaceNames(arguments, userFunc);
             Token temp = new Token(TokenType.Block, "", executbleCode);
             callDepth++;
             if (callDepth == 0)
             {
-                variables.RemoveReservedWord("return");                
-            }            
+                variables.RemoveReservedWord("return");
+            }
             try
             {
-                temp = BlockCommands.ExecuteBlock(temp);                
+                temp = BlockCommands.ExecuteBlock(temp);
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 temp = Token.Error("An error occured while performaing the operation");
             }
@@ -119,133 +106,89 @@ namespace MathProcessorLib
             {
                 variables.AddReservedWord("return");
             }
-            foreach (string s in namelessParams)
+            foreach (var pair in names)
             {
-                try
-                {                    
-                    variables.Remove(s);                    
-                }
-                catch (Exception) { }                
+                var item = variables.GetToken(pair.Key);
+                item.TokenName = pair.Value;
+                variables.Remove(pair.Key);
             }
             if (userFunc.returns && temp.TokenType != TokenType.Error)
             {
-                try 
+                try
                 {
-                    temp = variables.GetToken("return");                    
+                    temp = variables.GetToken("return");
                 }
-                    catch (Exception)
+                catch (Exception)
                 {
-                    temp= Token.Error("Return value not valid in function definition");
+                    temp = Token.Error("Return value not valid in function definition");
                 }
             }
             return temp;
         }
 
-        private static string ReplaceNames(List<Token> arguments, List<string> namelessParams, UserFunction userFunc)
+        private static string ReplaceNames(List<Token> arguments, UserFunction userFunc)
         {
-            StringBuilder executbleCode = new StringBuilder(userFunc.data);
+            StringBuilder executbleCode = new StringBuilder(userFunc.data);            
             for (int i = 0; i < arguments.Count; i++)
             {
-                if (arguments[i].TokenType == TokenType.Text)
+                var str = executbleCode.ToString();
+                executbleCode.Clear();
+                for (int j = 0; j < str.Length; )
                 {
-                    //continue;
-                }
-                if (arguments[i].TokenName.Length == 0 || arguments[i].TokenType == TokenType.Text)
-                {
-                    arguments[i].TokenName = "_" + Guid.NewGuid().ToString("N");
-                    variables.AddToken(arguments[i]);
-                    namelessParams.Add(arguments[i].TokenName);
-                }
-                bool isString = false;
-                for (int j = 0; j < executbleCode.Length; j++)
-                {
-                    if (executbleCode[j] == '"')
+                    int k = BlockCommands.SkipString(j, str);
+                    if (k > j)
                     {
-                        if (j > 0)
+                        executbleCode.Append(str.Substring(j, k - j));
+                        j = k;
+                        continue;
+                    }
+                    while (j < str.Length && Char.IsWhiteSpace(str[j]))
+                    {
+                        j++;
+                    }
+                    if (j < str.Length)
+                    {
+                        k = j;
+                        string currentStr = null;
+                        var isOp = Tokenizer.IsOperator(str[j].ToString());
+                        if (isOp != OpEnum.No)
                         {
-                            if (executbleCode[j - 1] != '\"')
+                            if (isOp == OpEnum.YesKeepGo && j < str.Length - 1)
                             {
-                                isString = !isString;
+                                isOp = Tokenizer.IsOperator(str.Substring(j, 2));
+                                if (isOp == OpEnum.Yes)
+                                {
+                                    j++;
+                                }
                             }
+                            j++;
+                            currentStr = str.Substring(k, j - k);
                         }
                         else
                         {
-                            isString = !isString;
-                        }
-                    }
-                    if (!isString)
-                    {
-                        int end = j + 1;
-                        int length = userFunc.signatureList[i].Length;
-                        int start = end - length;
-                        string oldStr = userFunc.signatureList[i];
-                        string newStr = arguments[i].TokenName;
-                        if (end > length)
-                        {
-                            string currentStr = executbleCode.ToString(start, length);
+                            executbleCode.Append(" ");
+                            while (j < str.Length && !Char.IsWhiteSpace(str[j]) &&
+                                   str[j] != ';' && str[j] != ':' && str[j] != '{' && str[j] != '}' && Tokenizer.IsOperator(str[j].ToString()) == OpEnum.No)
+                            {
+                                j++;
+                            }
+                            if (k == j)
+                            {
+                                j++;
+                            }
+                            string oldStr = userFunc.signatureList[i];
+                            currentStr = str.Substring(k, j - k);
                             if (currentStr == oldStr)
                             {
-                                executbleCode.Replace(oldStr, newStr, start, length);
+                                currentStr = arguments[i].TokenName;
                             }
                         }
+                        executbleCode.Append(currentStr);
                     }
                 }
             }
             return executbleCode.ToString();
-        }
-
-        static Token VerifySignature(UserFunction uFunc, List<Token>arguments)
-        {
-            if (uFunc.signatureList.Count != arguments.Count)
-            {
-                return Token.Error("Wrong number of arguments passed to function. Function expects " + uFunc.signatureList.Count + " argument(s).");                
-            }
-            for (int i = 0; i < arguments.Count; i++)
-            {
-                switch (uFunc.signatureList[i].Substring(0, 2))
-                {
-                    case "v_":
-                        if (arguments[i].TokenType != TokenType.Vector)
-                        {
-                            return Token.Error("Argument No. " + (i + 1) + " is not of type vector as required in function signature");
-                        }
-                        break;
-                    case "m_":
-                        if (arguments[i].TokenType != TokenType.Matrix)
-                        {
-                            return Token.Error("Argument No. " + (i + 1) + " is not of type matrix as required in function signature");
-                        }
-                        break;
-                    case "b_":
-                        if (arguments[i].TokenType != TokenType.Bool)
-                        {
-                            return Token.Error("Argument No. " + (i + 1) + " is not of type Bool as required in function signature");
-                        }
-                        break;
-                    case "s_":
-                        if (arguments[i].TokenType != TokenType.Text)
-                        {
-                            return Token.Error("Argument No. " + (i + 1) + " is not of type String as required in function signature");
-                        }
-                        break;
-                    //case "p_":
-                    //    if (!arguments[i].IsOfType(typeof(PlotToken)))
-                    //    {
-                    //        return Token.Error("Argument No. " + (i + 1) + " is not of type plot as required in function signature");
-                    //    }
-                    //    break;
-                    case "o_":
-                        if (arguments[i].TokenType != TokenType.Custom)
-                        {
-                            return Token.Error("Argument No. " + (i + 1) + " is not of type 'object' as required in function signature");
-                        }
-                        break;
-                    default:
-                        return Token.Error("Bad function definition");
-                }
-            }
-            return Token.Void;
-        }
+        }   
         
         internal class UserFunction
         {
@@ -261,7 +204,7 @@ namespace MathProcessorLib
                 this.data = data;
                 this.returns = returns;
             }
-            
+
             public void SaveXML(XElement root)
             {
                 XElement element = new XElement("userfunction");
@@ -277,7 +220,7 @@ namespace MathProcessorLib
             }
 
             public void LoadXML(XElement element)
-            {               
+            {
                 data = element.Element("data").Value;
                 returns = bool.Parse(element.Element("returns").Value);
                 signatureList = new List<string>();

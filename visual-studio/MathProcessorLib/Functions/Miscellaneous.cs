@@ -12,7 +12,7 @@ namespace MathProcessorLib
     public static class Miscellaneous
     {
         static Stack<Token> stack = new Stack<Token>();
-        
+
         public static void CreateFunctions()
         {
             Function.AddFunction("echo", EchoString);

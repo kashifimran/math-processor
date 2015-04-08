@@ -91,7 +91,8 @@ namespace MathProcessorLib
                         case TokenType.Function:
                         case TokenType.UserFunction:
                         case TokenType.Operator:
-                        case TokenType.LoopOrCondition:
+                        case TokenType.Loop:
+                        case TokenType.Condition:
                             message += t.TokenName + "  ";
                             break;
                         default:

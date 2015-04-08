@@ -10,7 +10,7 @@ namespace MathProcessorLib
 
     static class Tokenizer
     {
-        static Variables variables = Variables.GetVariables();        
+        static Variables variables = Variables.GetVariables();
 
         public static Token TokenizeString(String expression, out List<Token> tokens) //str --> a trimmed string
         {
@@ -134,9 +134,19 @@ namespace MathProcessorLib
                         tokens.Add(new Token(TokenType.Directive, nextTokenStr));
                     else if (Function.IsFuction(nextTokenStr))
                         tokens.Add(new Token(TokenType.Function, nextTokenStr));
-                    else if (BlockCommands.IsBlockCommand(nextTokenStr))
+                    else if (BlockCommands.IsConditionCommand(nextTokenStr))
                     {
-                        tokens.Add(new Token(TokenType.LoopOrCondition, nextTokenStr));
+                        tokens.Add(new Token(TokenType.Condition, nextTokenStr));
+                        if (nextTokenStr == "else")
+                        {
+                            tokens.Add(new Token(TokenType.Operator, "("));
+                            tokens.Add(new Token(TokenType.Bool, 0, 1));
+                            tokens.Add(new Token(TokenType.Operator, ")"));
+                        }
+                    }
+                    else if (BlockCommands.IsLoopCommand(nextTokenStr))
+                    {
+                        tokens.Add(new Token(TokenType.Loop, nextTokenStr));
                         if (nextTokenStr == "while")
                         {
                             nextTokenStr = "";
@@ -225,7 +235,7 @@ namespace MathProcessorLib
         }
 
         static string[] operators = { "%", "+", "-", "/", "*", "(", ")", ",", "^", "<=", ">=", "==", "!=", "~", "??" };
-        static OpEnum IsOperator(string s)
+        public static OpEnum IsOperator(string s)
         {
             if (operators.Contains(s))
             {

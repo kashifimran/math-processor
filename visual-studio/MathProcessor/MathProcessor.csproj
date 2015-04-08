@@ -216,6 +216,7 @@
     <Content Include="Examples\10__dancing-curves.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Examples\11_cnr2.txt" />
     <Content Include="README.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

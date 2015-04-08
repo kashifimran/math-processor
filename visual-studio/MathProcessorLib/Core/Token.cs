@@ -11,7 +11,7 @@ namespace MathProcessorLib
     public enum TokenType
     {
         Void, Error, Operator, Function, UserFunction, Directive, Vector, Text, Block,
-        LoopOrCondition, Bool, FunctionDefiner, Break, Matrix, Custom
+        Loop, Condition, Bool, FunctionDefiner, Break, Matrix, Custom, ConditionExecuted
     }
 
     public interface IExtendedToken
@@ -249,7 +249,7 @@ namespace MathProcessorLib
             get { return data; }
             set
             {
-                if (type == TokenType.Text || type == TokenType.UserFunction || type == TokenType.LoopOrCondition || type == TokenType.Block)
+                if (type == TokenType.Text || type == TokenType.UserFunction || type == TokenType.Condition || type == TokenType.Loop || type == TokenType.Block)
                     data = value;
                 else
                     throw new ArgumentException("Type of token incompatible");

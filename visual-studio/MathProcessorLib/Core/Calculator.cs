@@ -284,7 +284,8 @@ namespace MathProcessorLib
                         operatorStack.Push(infixTokens[i]);
                     }
                 }
-                else if (infixTokens[i].TokenType == TokenType.Function || infixTokens[i].TokenType == TokenType.LoopOrCondition ||
+                else if (infixTokens[i].TokenType == TokenType.Function || infixTokens[i].TokenType == TokenType.Loop ||
+                         infixTokens[i].TokenType == TokenType.Condition ||
                          infixTokens[i].TokenType == TokenType.UserFunction || infixTokens[i].TokenType == TokenType.FunctionDefiner)
                 {
                     assignmentValid = false;
@@ -340,7 +341,8 @@ namespace MathProcessorLib
                     }
                     if (openCount != 0 || commaBegin)
                         return Token.Error("Bracket mismatch or bad comma");
-                    if (operatorStack.Peek().TokenType == TokenType.LoopOrCondition || operatorStack.Peek().TokenType == TokenType.FunctionDefiner)
+                    Token p = operatorStack.Peek();
+                    if (p.TokenType == TokenType.Loop || p.TokenType == TokenType.Condition || p.TokenType == TokenType.FunctionDefiner)
                     {
                         i++;
                         if (i < infixTokens.Count && infixTokens[i].TokenType == TokenType.Block)
@@ -351,23 +353,23 @@ namespace MathProcessorLib
                         else
                             return Token.Error("Expecting  block of commands inside curly brackets - { }");
                     }
-                    if (operatorStack.Peek().TokenName == "if")
-                    {
-                        if (i + 1 < infixTokens.Count)
-                        {
-                            if (infixTokens[i + 1].TokenName == "else")
-                            {
-                                i++;
-                                if (i + 1 == infixTokens.Count)
-                                    return Token.Error("Wrong use of 'else'");
-                                i++;
-                                if (infixTokens[i].TokenType != TokenType.Block)
-                                    return Token.Error("'else' should be followed by commands inside curly brackets - { }");
-                                postfixTokens.Add(infixTokens[i]);
-                                paramCount++;
-                            }
-                        }
-                    }
+                    //if (p.TokenName == "if" || p.TokenName == "elseif")
+                    //{
+                    //    if (i + 1 < infixTokens.Count)
+                    //    {
+                    //        if (infixTokens[i + 1].TokenName == "else")
+                    //        {
+                    //            i++;
+                    //            if (i + 1 == infixTokens.Count)
+                    //                return Token.Error("Wrong use of 'else'");
+                    //            i++;
+                    //            if (infixTokens[i].TokenType != TokenType.Block)
+                    //                return Token.Error("'else' should be followed by commands inside curly brackets - { }");
+                    //            postfixTokens.Add(infixTokens[i]);
+                    //            paramCount++;
+                    //        }
+                    //    }
+                    //}
                     postfixTokens.Add(new Token(TokenType.Vector, paramCount));
                     postfixTokens.Add(operatorStack.Pop());
                 }
@@ -451,8 +453,9 @@ namespace MathProcessorLib
             Token result = Token.Void;
             try
             {
-                foreach (Token t in postfixTokens)
+                for (int index = 0; index < postfixTokens.Count; index++)
                 {
+                    Token t = postfixTokens[index];
                     if (t.TokenType == TokenType.Vector || t.TokenType == TokenType.Text ||
                         t.TokenType == TokenType.Bool || t.TokenType == TokenType.Block ||
                         t.TokenType == TokenType.Break || t.TokenType == TokenType.Matrix ||
@@ -460,7 +463,7 @@ namespace MathProcessorLib
                     {
                         operands.Push(t);
                     }
-                    else if (t.TokenType == TokenType.Function || t.TokenType == TokenType.LoopOrCondition ||
+                    else if (t.TokenType == TokenType.Function || t.TokenType == TokenType.Loop || t.TokenType == TokenType.Condition ||
                              t.TokenType == TokenType.UserFunction || t.TokenType == TokenType.FunctionDefiner)
                     {
                         int paramCount = (int)(operands.Pop().FirstValue);
@@ -483,22 +486,27 @@ namespace MathProcessorLib
                             if (resultToken.TokenType == TokenType.Error)
                                 return resultToken;
                         }
-                        else if (t.TokenType == TokenType.LoopOrCondition)
+                        else if (t.TokenType == TokenType.Loop)
                         {
-                            if (t.TokenName == "repeat" || t.TokenName == "while")
-                            {
-                                loopDepth++;
-                            }
-                            resultToken = BlockCommands.Execute(t.TokenName, parameters);
+                            loopDepth++;
+                            resultToken = BlockCommands.ExecuteLoop(t.TokenName, parameters);
                             if (resultToken.TokenType == TokenType.Error)
                             {
                                 loopDepth = 0;
                                 return resultToken;
                             }
-                            if (t.TokenName == "repeat" || t.TokenName == "while")
+                            loopDepth--;
+                        }
+                        else if (t.TokenType == TokenType.Condition)
+                        {
+                            Token param = Token.Void;
+                            if (t.TokenName == "elseif" || t.TokenName == "else")
                             {
-                                loopDepth--;
+                                param = operands.Pop();
                             }
+                            resultToken = BlockCommands.ExecuteCondition(t.TokenName, param, parameters);
+                            if (resultToken.TokenType == TokenType.Error)
+                                return resultToken;
                         }
                         else
                         {
@@ -637,12 +645,16 @@ namespace MathProcessorLib
                     if (result.TokenType != TokenType.Error)
                         return Token.Void;
                 }
-                else if (result.TokenType == TokenType.Operator || result.TokenType == TokenType.LoopOrCondition)
+                else if (result.TokenType == TokenType.Operator || result.TokenType == TokenType.Loop || result.TokenType == TokenType.Condition)
                     return Token.Error("Error in expression");
             }
             catch (Exception)
             {
                 return Token.Error("Error in expression");
+            }
+            if (result.TokenType == TokenType.ConditionExecuted)
+            {
+                return Token.Void;
             }
             return result;
         }

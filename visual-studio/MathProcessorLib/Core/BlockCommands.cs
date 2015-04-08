@@ -16,32 +16,93 @@ namespace MathProcessorLib
                 variables.AddToken(new Token(TokenType.Vector, "maxtime", new double[] { 5000 }));
         }
 
-        public static bool IsBlockCommand(string operation)
+        public static bool IsLoopCommand(string operation)
         {
-            if (operation == "if" || operation == "else" || operation == "repeat" || operation == "while")
+            if (operation == "repeat" || operation == "while")
                 return true;
             else
                 return false;
         }
 
-        public static Token Execute(string operation, List<Token> arguments)
+        public static bool IsConditionCommand(string operation)
         {
-            if (!(operation == "if" || operation == "repeat" || operation == "while"))
-                return Token.Error("Invalid command");
+            if (operation == "if" || operation == "else" || operation == "elseif")
+                return true;
+            else
+                return false;
+        }
 
-            if (operation == "if")
-            {
-                return IfCondition(arguments);
-            }
-            else if (operation == "repeat")
+        public static Token ExecuteLoop(string operation, List<Token> arguments)
+        {
+            if (operation == "repeat")
             {
                 return RepeatLoop(arguments);
             }
-            else //(operation == "while")
+            else if (operation == "while")
             {
                 return WhileLoop(arguments);
             }
+            else
+            {
+                return Token.Error("Invalid command. repeat or while loop were expected.");
+            }
         }
+
+        public static Token ExecuteCondition(string operation, Token pastResult, List<Token> arguments)
+        {
+            if (pastResult.TokenType == TokenType.ConditionExecuted)
+            {
+                return pastResult;
+            } 
+            if (arguments.Count != 2)
+                return Token.Error("Syntax error in use of 'if/elseif/else' construct");
+
+            if (arguments.First().TokenType != TokenType.Bool)
+                return Token.Error("Condition specified does not evaluate to Boolean value");
+
+            if (arguments.Last().TokenType != TokenType.Block)
+                return Token.Error("Syntax error in use of 'if/elseif' construct");
+            if (arguments.First().FirstValue == 1)
+            {
+                Token t = ExecuteBlock(arguments[1]);
+                if (t.TokenType == TokenType.Void)
+                {
+                    return new Token(TokenType.ConditionExecuted);
+                }
+                return t;
+            }                 
+            else 
+                return Token.Void;
+        }
+
+        //public static Token ExecuteCondition_OLd(string operation, List<Token> arguments)
+        //{
+        //    if (arguments.Count != 2)
+        //        return Token.Error("Syntax error in use of 'if/elseif' construct");
+
+        //    if (arguments.First().TokenType != TokenType.Bool)
+        //        return Token.Error("Condition specified does not evaluate to Boolean value");
+
+        //    if (arguments.Count == 2)
+        //    {
+        //        if (arguments.Last().TokenType != TokenType.Block)
+        //            return Token.Error("Syntax error in use of 'if/elseif' construct");
+        //        if (arguments.First().FirstValue == 1)
+        //        {
+        //            return ExecuteBlock(arguments[1]);
+        //        }
+        //    }
+        //    else if (arguments.Count == 3)
+        //    {
+        //        if (arguments[1].TokenType != TokenType.Block || arguments[2].TokenType != TokenType.Block)
+        //            return Token.Error("Syntax error in use of 'if/elseif' construct");
+        //        if (arguments.First().FirstValue == 1)
+        //            return ExecuteBlock(arguments[1]);
+        //        else
+        //            return ExecuteBlock(arguments[2]);
+        //    }
+        //    return Token.Error("Bad if/elseif block.");
+        //}
 
         public static Token ExecuteBlock(Token block)
         {
@@ -49,25 +110,28 @@ namespace MathProcessorLib
             {
                 Token result = null;
                 block.TrimToken();
-                String tokenString = block.StrData;
-                char lastChar = tokenString[tokenString.Length - 1];
-                if (lastChar != ':' && lastChar != '}')
+                String tokenString = block.StrData.Trim();
+                if (tokenString.Length > 0)
                 {
-                    return Token.Error("Missing ':' or '}'");
-                }
-
-                List<string> commands = GetCommandsColonEnd(tokenString);
-                if (commands == null)
-                {
-                    return Token.Error("No valid commands provided");
-                }
-
-                for (int i = 0; i < commands.Count; i++)
-                {
-                    result = Calculator.ProcessCommand(commands[i], true);
-                    if (result.TokenType == TokenType.Error || result.TokenType == TokenType.Break)
+                    char lastChar = tokenString[tokenString.Length - 1];
+                    if (lastChar != ':' && lastChar != '}')
                     {
-                        return result;
+                        return Token.Error("Missing ':' or '}'");
+                    }
+
+                    List<string> commands = GetCommandsColonEnd(tokenString);
+                    if (commands == null)
+                    {
+                        return Token.Error("No valid commands provided");
+                    }
+
+                    for (int i = 0; i < commands.Count; i++)
+                    {
+                        result = Calculator.ProcessCommand(commands[i], true);
+                        if (result.TokenType == TokenType.Error || result.TokenType == TokenType.Break)
+                        {
+                            return result;
+                        }
                     }
                 }
                 return Token.Void;
@@ -80,37 +144,10 @@ namespace MathProcessorLib
             {
                 return Token.Error("Error in executing requested operation. Make sure the command exists.");
             }
-        }
-
-        public static Token IfCondition(List<Token> arguments)
-        {
-            if (arguments.Count < 2)
-                return Token.Error("Syntax error in use of 'if' construct");
-
-            if (arguments.First().TokenType != TokenType.Bool)
-                return Token.Error("Condition specified does not evaluate to Boolean value");
-
-            if (arguments.Count == 2)
-            {
-                if (arguments.Last().TokenType != TokenType.Block)
-                    return Token.Error("Syntax error in use of 'if' construct");
-                if (arguments.First().FirstValue == 1)
-                    return ExecuteBlock(arguments[1]);
-            }
-            else if (arguments.Count == 3)
-            {
-                if (arguments[1].TokenType != TokenType.Block || arguments[2].TokenType != TokenType.Block)
-                    return Token.Error("Syntax error in use of 'if' construct");
-                if (arguments.First().FirstValue == 1)
-                    return ExecuteBlock(arguments[1]);
-                else
-                    return ExecuteBlock(arguments[2]);
-            }
-            return Token.Void;
-        }
+        }        
 
         static Token WhileLoop(List<Token> tokenList)
-        {   
+        {
             if (tokenList.Count != 2 || tokenList[0].TokenType != TokenType.Text || tokenList[1].TokenType != TokenType.Block)
                 return Token.Error("Syntax error in use of 'while' construct");
             tokenList[1].TrimToken();
@@ -129,7 +166,7 @@ namespace MathProcessorLib
             {
                 maxTime = (int)variables.GetVector("maxtime").First();
                 if (maxTime <= 0)
-                    maxTime = 5000;                
+                    maxTime = 5000;
             }
             catch (Exception) { }
 
@@ -193,14 +230,14 @@ namespace MathProcessorLib
                         {
                             return Token.Error("The 'while' loop took longer than the maximum allowed time ( " + maxTime + " ms). Operation aborted. Variables my be corrupt. You may change the value of 'maxtime' to incease/decrease the maximum allowed time for the while loop.");
                         }
-                    }                    
+                    }
                 }
             }
             return Token.Void;
         }
 
         private static Token ExecuteCommand(List<Token> nextCommandList)
-        {  
+        {
             Token resultToken = Token.Void;
             if (nextCommandList.First().TokenType == TokenType.Directive)
             {
@@ -214,7 +251,7 @@ namespace MathProcessorLib
         }
 
         static Token RepeatLoop(List<Token> tokenList)
-        {   
+        {
             if (tokenList.Count != 2 || tokenList.Last().TokenType != TokenType.Block)
                 return Token.Error("Syntax error in use of 'repeat' construct");
             tokenList[1].TrimToken();
@@ -242,7 +279,7 @@ namespace MathProcessorLib
                 if (resultToken.TokenType == TokenType.Error)
                 {
                     return Token.Error(resultToken.StrData + " (Expression No. " + (commands.IndexOf(s) + 1) + " )");
-                }                
+                }
                 if (tokens.First().TokenType == TokenType.Directive)
                 {
                     commandTokenList.Add(tokens);
@@ -259,7 +296,7 @@ namespace MathProcessorLib
                 }
                 suppressOutput.Add(suppress);
             }
-            
+
             for (int i = 0; i < count; i++)
             {
                 for (int j = 0; j < commandTokenList.Count; j++)
@@ -334,15 +371,10 @@ namespace MathProcessorLib
             for (int i = 0; i < commands.Count; i++)
             {
                 commands[i] = commands[i].Trim();
-                if (commands[i].StartsWith("else"))
+                if (commands[i].StartsWith("elseif") || commands[i].StartsWith("else"))
                 {
-                    if (i > 0)
-                    {
-                        commands[i - 1] = commands[i - 1] + commands[i];
-                        temp.RemoveAt(temp.Count - 1);
-                        temp.Add(commands[i - 1]);
-                        continue;
-                    }
+                    temp[temp.Count - 1] += commands[i]; ;
+                    continue;
                 }
                 if (commands[i].Length > 0)
                 {
@@ -352,7 +384,7 @@ namespace MathProcessorLib
             return temp;
         }
 
-        static int SkipString(int i, string str)
+        public static int SkipString(int i, string str)
         {
             if (str[i] == '\"')
             {

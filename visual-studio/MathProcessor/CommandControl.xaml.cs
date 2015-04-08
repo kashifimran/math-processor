@@ -201,6 +201,7 @@ namespace MathProcessor
         void AddNewBox(DisplayBoxType dbt, string text)
         {
             TextDisplayBox newBox = new TextDisplayBox(dbt, new Point(currentBox.Location.X, currentBox.Bottom));
+            newBox.SetText(text);
             displayBoxes.Add(newBox);
             currentBox = newBox;
             this.MinHeight += currentBox.Height;

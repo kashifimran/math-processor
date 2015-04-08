@@ -1,0 +1,1 @@
+cnr2 = function(return, n) { half = floor(n/2);:  r = n * half;: if (n%2 == 0){r = r - half;:} return = r;:}

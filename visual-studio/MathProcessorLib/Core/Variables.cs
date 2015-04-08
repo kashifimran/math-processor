@@ -283,7 +283,12 @@ namespace MathProcessorLib
 
         public Token GetToken(string name)
         {
-            return namedTokens[name].token;
+            var t = namedTokens[name].token;
+            if (t.TokenName != name)
+            {
+                t.TokenName = name;
+            }
+            return t;
         }
 
         class NamedToken

@@ -225,7 +225,7 @@ namespace MathProcessorLib
 
             if (!plot.IsOfType(typeof(PlotToken)))
             {
-                return Token.Error("1st parameter must be a plot created through a call to CreatePlot() function");
+                return Token.Error("1st parameter must be a plot created through a call to createplot() function");
             }
             if (arguments[1].TokenType != TokenType.Vector)
             {

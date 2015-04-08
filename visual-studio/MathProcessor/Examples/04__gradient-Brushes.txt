@@ -3,12 +3,12 @@
 	
 	removeall;:
 	/*This is my favorite thing!*/
-	spirograph = function (o_plot, v_R, v_r, v_p, v_nRotations, v_thickness, s_color, o_fill)
+	spirograph = function (_plot, R, r, p, rotations, thickness, color, fill)
 	{
-		t = vectorin(0, 0.05, 2 * pi * v_nRotations);:
-		x = (v_R + v_r) * cos(t) + v_p * cos((v_R + v_r) * t / v_r);:
-		y = (v_R + v_r)* sin(t) + v_p * sin((v_R + v_r) * t / v_r);:
-		addplot(o_plot, x, y, 0, v_thickness, s_color, 0, 0, o_fill):
+		t = vectorin(0, 0.05, 2 * pi * rotations);:
+		x = (R + r) * cos(t) + p * cos((R + r) * t / r);:
+		y = (R + r)* sin(t) + p * sin((R + r) * t / r);:
+		addplot(_plot, x, y, 0, thickness, color, 0, 0, fill):
 	}
 	
 	b1 = lgbrush(array(0, 0, 400, 400), true, 0, strings(red, green));:
