@@ -189,10 +189,10 @@
     <Content Include="Examples\01__primes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Examples\02__new-plots.txt">
+    <Content Include="Examples\02__plots.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Examples\03__new-spirograph.txt">
+    <Content Include="Examples\03__spirograph.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Examples\04__gradient-Brushes.txt">
@@ -207,7 +207,6 @@
     <Content Include="Examples\07__user-table.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Examples\08_cnr2.txt" />
     <Content Include="README.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MathProcessor"
-#define MyAppVersion "1.0.2.4"
+#define MyAppVersion "1.0.2.5"
 #define MyAppPublisher "Kashif Imran"
-#define MyAppURL "http://www.mathiversity.com/"
+#define MyAppURL "https://www.mathiversity.com/"
 #define MyAppExeName "MathProcessor.exe"
 
 [Setup]
@@ -43,15 +43,12 @@ Source: "visual-studio\MathProcessor\bin\Release\README.html"; DestDir: "{app}";
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 Source: "visual-studio\MathProcessor\Examples\00__filled-spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
 Source: "visual-studio\MathProcessor\Examples\01__primes.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\02__new-plots.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\03__new-spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\02__plots.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\03__spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
 Source: "visual-studio\MathProcessor\Examples\04__gradient-Brushes.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
 Source: "visual-studio\MathProcessor\Examples\05__fibonacci.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\06__old-plots.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\07__old-spirograph.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\08__addplot-example.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\09__user-table.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
-Source: "visual-studio\MathProcessor\Examples\10__dancing-curves.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\06__addplot-example.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
+Source: "visual-studio\MathProcessor\Examples\07__user-table.txt"; DestDir: "{app}\Examples"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
