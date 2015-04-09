@@ -110,7 +110,7 @@ namespace MathProcessorLib
             {
                 Token result = null;
                 block.TrimToken();
-                String tokenString = block.StrData.Trim();
+                String tokenString = block.StrData;
                 if (tokenString.Length > 0)
                 {
                     char lastChar = tokenString[tokenString.Length - 1];

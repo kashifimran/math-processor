@@ -81,7 +81,8 @@ namespace MathProcessorLib
             Dictionary<string, string> names = new Dictionary<string, string>();
             for (int i = 0; i < arguments.Count; i++)
             {
-                var tempName = "_" + Guid.NewGuid().ToString("N");
+                //var tempName = "_" + Guid.NewGuid().ToString("N");
+                var tempName = GenerateRandomName(); //This is much faster than Guid due to smaller string length
                 names.Add(tempName, arguments[i].TokenName);
                 arguments[i].TokenName = tempName;
                 variables.AddToken(arguments[i]);
@@ -126,70 +127,118 @@ namespace MathProcessorLib
             return temp;
         }
 
+        static StringBuilder executbleCode = new StringBuilder();
         private static string ReplaceNames(List<Token> arguments, UserFunction userFunc)
         {
-            StringBuilder executbleCode = new StringBuilder(userFunc.data);            
-            for (int i = 0; i < arguments.Count; i++)
+            executbleCode.Clear();
+            string str = userFunc.data;
+            for (int j = 0; j < str.Length; )
             {
-                var str = executbleCode.ToString();
-                executbleCode.Clear();
-                for (int j = 0; j < str.Length; )
+                int k = BlockCommands.SkipString(j, str);
+                if (k > j)
                 {
-                    int k = BlockCommands.SkipString(j, str);
-                    if (k > j)
+                    executbleCode.Append(str.Substring(j, k - j));
+                    j = k;
+                    continue;
+                }
+                while (j < str.Length && Char.IsWhiteSpace(str[j]))
+                {
+                    j++;
+                }
+                if (j < str.Length)
+                {
+                    k = j;
+                    string currentStr = null;
+                    var isOp = Tokenizer.IsOperator(str[j].ToString());
+                    if (isOp != OpEnum.No)
                     {
-                        executbleCode.Append(str.Substring(j, k - j));
-                        j = k;
-                        continue;
-                    }
-                    while (j < str.Length && Char.IsWhiteSpace(str[j]))
-                    {
-                        j++;
-                    }
-                    if (j < str.Length)
-                    {
-                        k = j;
-                        string currentStr = null;
-                        var isOp = Tokenizer.IsOperator(str[j].ToString());
-                        if (isOp != OpEnum.No)
+                        if (isOp == OpEnum.YesKeepGo && j < str.Length - 1)
                         {
-                            if (isOp == OpEnum.YesKeepGo && j < str.Length - 1)
+                            isOp = Tokenizer.IsOperator(str.Substring(j, 2));
+                            if (isOp == OpEnum.Yes)
                             {
-                                isOp = Tokenizer.IsOperator(str.Substring(j, 2));
-                                if (isOp == OpEnum.Yes)
-                                {
-                                    j++;
-                                }
+                                j++;
                             }
-                            j++;
-                            currentStr = str.Substring(k, j - k);
                         }
-                        else
+                        j++;
+                        currentStr = str.Substring(k, j - k);
+                    }
+                    else
+                    {
+                        //executbleCode.Append(" ");
+                        while (j < str.Length && !Char.IsWhiteSpace(str[j]) &&
+                               str[j] != ';' && str[j] != ':' && str[j] != '{' && str[j] != '}' && Tokenizer.IsOperator(str[j].ToString()) == OpEnum.No)
                         {
-                            executbleCode.Append(" ");
-                            while (j < str.Length && !Char.IsWhiteSpace(str[j]) &&
-                                   str[j] != ';' && str[j] != ':' && str[j] != '{' && str[j] != '}' && Tokenizer.IsOperator(str[j].ToString()) == OpEnum.No)
-                            {
-                                j++;
-                            }
-                            if (k == j)
-                            {
-                                j++;
-                            }
+                            j++;
+                        }
+                        if (k == j)
+                        {
+                            j++;
+                        }
+                        currentStr = str.Substring(k, j - k);
+                        for (int i = 0; i < arguments.Count; i++)
+                        {
                             string oldStr = userFunc.signatureList[i];
-                            currentStr = str.Substring(k, j - k);
                             if (currentStr == oldStr)
                             {
                                 currentStr = arguments[i].TokenName;
+                                break;
                             }
-                        }
-                        executbleCode.Append(currentStr);
+                        }           
                     }
+                    executbleCode.Append(currentStr);
                 }
             }
             return executbleCode.ToString();
-        }   
-        
+        }
+
+        static StringBuilder sb = new StringBuilder();
+        static int length = 4;
+        static int clashCount = 0;
+        //static HashSet<string> nameSet = new HashSet<string>();
+        static Random rand = new Random();
+        static string domain = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                               "abcdefghijklmnopqrstuvwxyz";// + "0123456789";
+
+        static string domainN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                                "abcdefghijklmnopqrstuvwxyz" +
+                                "0123456789";
+
+        static string GenerateRandomName()
+        {
+            sb.Clear();
+            sb.Append(domain[rand.Next(domain.Length)]);
+            for (var i = 0; i < length - 1; i++)
+            {
+                sb.Append(domainN[rand.Next(domain.Length)]);
+            }
+            string str = sb.ToString();
+            if (variables.Contains(str))
+            {
+                clashCount++;
+                if (clashCount > 10)
+                {
+                    length++;
+                    clashCount = 0;
+                }
+                return GenerateRandomName();
+            }
+            else
+            {
+                return str;
+            }
+            //string str = sb.ToString();
+            //if (nameSet.Contains(str))
+            //{
+            //    return GenerateRandomName();
+            //}
+            //else
+            //{
+            //    nameSet.Add(str);
+            //    return str;
+            //}
+        }
+
         internal class UserFunction
         {
             internal List<string> signatureList;
@@ -198,13 +247,13 @@ namespace MathProcessorLib
 
             internal UserFunction() { }
 
-            internal UserFunction(List<string> signature, string data, bool returns)
+            internal UserFunction(List<string> argumentNames, string data, bool returns)
             {
-                this.signatureList = signature;
-                this.data = data;
+                this.signatureList = argumentNames;
                 this.returns = returns;
+                this.data = data.Trim();
             }
-
+            
             public void SaveXML(XElement root)
             {
                 XElement element = new XElement("userfunction");
@@ -229,7 +278,7 @@ namespace MathProcessorLib
                 {
                     signatureList.Add(v.Value);
                 }
-            }
+            }             
         }
     }
 }
