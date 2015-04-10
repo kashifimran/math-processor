@@ -446,10 +446,5 @@ namespace MathProcessor
         {
             Process.Start("http://www.facebook.com/mathiversity");
         }
-
-        private void SolveNow_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://www.Gamentry.com");
-        }
     }
 }

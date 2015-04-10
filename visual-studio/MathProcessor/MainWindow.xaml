@@ -58,9 +58,6 @@
                 <MenuItem Name="truthKitMenu" Header="_Truth Tables" Click="KitMenuItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem x:Name="examplesMenuItem" Header="E_xamples"></MenuItem>
-            <MenuItem Header="Free Online _Puzzles">
-                <MenuItem Header="_Solve Now" Click="SolveNow_Click"></MenuItem>
-            </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_Tutorials" Click="TutorialsMenu_Click"></MenuItem>
                 <MenuItem Header="_Documentation" Click="DocumentationMenu_Click"></MenuItem>

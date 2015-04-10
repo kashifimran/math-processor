@@ -74,9 +74,6 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConfigManager.cs" />
-    <Compile Include="GamentryAd.xaml.cs">
-      <DependentUpon>GamentryAd.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Kits\Basic\BasicKit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,10 +104,6 @@
     <Page Include="CommandControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GamentryAd.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -177,9 +170,6 @@
     <Resource Include="app_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\jigsaw_new.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="app_icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +200,9 @@
     <Content Include="README.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
